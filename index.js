@@ -2,6 +2,7 @@ const CROSS = 'X';
 const ZERO = 'O';
 const EMPTY = ' ';
 const RED = '#FF0000';
+const BOT = true;
 let endGame = false;
 
 const container = document.getElementById('fieldWrapper');
@@ -34,6 +35,19 @@ function findWinner (winner) {
     return winner === 0 ? CROSS : ZERO;
 }
 
+function botTurn () {
+    let arr = [];
+    for (let i = 0; i < container.children.length; i++) {
+        for (let j = 0; j < container.children[i].children.length; j++) {
+            if (field[i][j] === 2){
+                arr.push([i, j]);
+            }
+        }
+    }
+    let rnd = arr[Math.floor(Math.random() * arr.length)]
+    cellClickHandler(rnd[0], rnd[1]);
+}
+
 function cellClickHandler (row, col) {
     console.log(`Clicked on cell: ${row}, ${col}`);
     if (field[row][col] !== 2 || endGame) {
@@ -55,6 +69,9 @@ function cellClickHandler (row, col) {
             alert("Победила дружба");
             endGame = true;
         })
+    }
+    if (currentPlayer === 1 && BOT){
+        botTurn();
     }
 }
 
@@ -125,6 +142,7 @@ function checkWinner () {
     }
     return 2;
 }
+
 
 
 /* Test Function */
