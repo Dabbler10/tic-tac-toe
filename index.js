@@ -44,6 +44,15 @@ function botTurn () {
             }
         }
     }
+    for (let i of arr) {
+        field[i[0]][i[1]] = 1;
+        if (botCheck() === 1) {
+            field[i[0]][i[1]] = 2;
+            cellClickHandler(i[0], i[1]);
+            return;
+        }
+        field[i[0]][i[1]] = 2;
+    }
     let rnd = arr[Math.floor(Math.random() * arr.length)]
     cellClickHandler(rnd[0], rnd[1]);
 }
@@ -144,6 +153,27 @@ function checkWinner () {
 }
 
 
+function botCheck () {
+    for (let i = 0; i < field.length; i++) {
+        if (field[i][0] === field[i][1] && field[i][1] === field[i][2] && field[i][0] !== 2) {
+            return field[i][0];
+        }
+    }
+
+    for (let j = 0; j < field[0].length; j++) {
+        if (field[0][j] === field[1][j] && field[1][j] === field[2][j] && field[0][j] !== 2) {
+            return field[0][j];
+        }
+    }
+
+    if (field[0][0] === field[1][1] && field[1][1] === field[2][2] && field[0][0] !== 2) {
+        return field[0][0];
+    }
+    if (field[0][2] === field[1][1] && field[1][1] === field[2][0] && field[0][2] !== 2) {
+        return field[0][2];
+    }
+    return 2;
+}
 
 /* Test Function */
 /* Победа первого игрока */
